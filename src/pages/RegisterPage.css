@@ -1,0 +1,12 @@
+.register-card {
+    max-width: 480px;
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .form-row .form-field {
+    flex: 1;
+  }
