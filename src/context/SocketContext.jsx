@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { io } from 'socket.io-client';
 import { useAuth } from './AuthContext';
+import { config } from '../config';
 
 const SocketContext = createContext(null);
 
@@ -8,11 +9,11 @@ export const SocketProvider = ({ children }) => {
   const { token } = useAuth();
   const socketRef = useRef(null);
   const [connected, setConnected] = useState(false);
-
+  
   useEffect(() => {
     if (!token) return;
 
-    socketRef.current = io('http://localhost:5000', {
+    socketRef.current = io(config.SOCKET_URL, {
       auth: { token }
     });
 

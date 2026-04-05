@@ -8,7 +8,7 @@ export default function VideoPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const videoRef = useRef(null);
-  const baseUrl = import.meta.env.VITE_BASE_URL
+  // const baseUrl = config.SOCKET_URL
 
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(true);
