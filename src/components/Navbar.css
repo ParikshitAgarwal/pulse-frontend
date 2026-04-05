@@ -51,7 +51,7 @@
 
 /* Desktop right */
 .navbar-right {
-  display: flex;
+  display: flex !important;
   align-items: center;
   gap: 16px;
   flex-shrink: 0;
