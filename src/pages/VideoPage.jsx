@@ -3,16 +3,17 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import api from '../api/axios';
 import './VideoPage.css';
+import { config } from '../config';
+import { useAuth } from '../context/AuthContext';
 
 export default function VideoPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const videoRef = useRef(null);
-  // const baseUrl = config.SOCKET_URL
-
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const {token} = useAuth()
 
   useEffect(() => {
     const fetchVideo = async () => {
@@ -36,8 +37,7 @@ export default function VideoPage() {
     });
 
   // Stream URL — token in query param for video element (can't set headers on <video>)
-  // const streamUrl = `${baseUrl}/videos/${id}/stream?token=${localStorage.getItem('token')}`;
-  const streamUrl = video?.path
+  const streamUrl = `${config.API_URL}/videos/${id}/stream?token=${token}`;
   if (loading) return (
     <>
       <Navbar />
