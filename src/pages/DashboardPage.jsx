@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import api from '../api/axios';
 import './DashboardPage.css';
+import { useAuth } from '../context/AuthContext';
 
 const STATUS_FILTERS = ['all', 'processing', 'safe', 'flagged'];
 
@@ -29,6 +30,7 @@ export default function DashboardPage() {
   const [filter, setFilter] = useState('all');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const { user } = useAuth()
 
   const fetchVideos = async () => {
     try {
@@ -42,6 +44,20 @@ export default function DashboardPage() {
       setLoading(false);
     }
   };
+
+  const deleteVideo = async (id) => {
+    try {
+       setLoading(true);
+      const params = filter !== 'all' ? { status: filter } : {};
+      await api.delete(`/videos/${id}`, { params });
+      fetchVideos();
+    } catch (error) {
+      setError('Failed to Delete video');
+      
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => { fetchVideos(); }, [filter]);
 
@@ -134,6 +150,16 @@ export default function DashboardPage() {
                           View
                         </button>
                       </td>
+                      {user.role != 'viewer' ? <td>
+                        <button
+                          className="btn-delete"
+                          onClick={() => deleteVideo(video._id)}
+                        >
+                          Delete
+                        </button>
+                      </td> : ''
+
+                      }
                     </tr>
                   ))}
                 </tbody>
@@ -180,6 +206,16 @@ export default function DashboardPage() {
                   >
                     View Video →
                   </button>
+                  {user.role != 'viewer' ?
+                    <button
+                      className="btn-delete-full"
+                      onClick={() => deleteVideo(video._id)}
+                    >
+                      Delete
+                    </button>
+                    : ''
+
+                  }
                 </div>
               ))}
             </div>
