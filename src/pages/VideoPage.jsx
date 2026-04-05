@@ -36,8 +36,8 @@ export default function VideoPage() {
     });
 
   // Stream URL — token in query param for video element (can't set headers on <video>)
-  const streamUrl = `${baseUrl}/videos/${id}/stream?token=${localStorage.getItem('token')}`;
-
+  // const streamUrl = `${baseUrl}/videos/${id}/stream?token=${localStorage.getItem('token')}`;
+  const streamUrl = video?.path
   if (loading) return (
     <>
       <Navbar />
