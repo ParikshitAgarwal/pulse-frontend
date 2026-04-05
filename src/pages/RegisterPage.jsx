@@ -21,7 +21,7 @@ export default function RegisterPage() {
     if (form.password.length < 6) return setError('Password must be at least 6 characters');
     setLoading(true);
     try {
-      await register(form.name, form.email, form.password, form.role, form.organisation || 'default');
+      await register(form.name, form.email, form.password, form.role, form.organisation);
       navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
@@ -67,7 +67,7 @@ export default function RegisterPage() {
           <div className="form-row">
             <div className="form-field">
               <label>Organisation</label>
-              <input name="organisation" type="text" placeholder="my-org"
+              <input name="organisation" type="text" placeholder="my-org" required
                 value={form.organisation} onChange={handle} />
             </div>
             <div className="form-field">
